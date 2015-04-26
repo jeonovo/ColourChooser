@@ -8,7 +8,7 @@ import javax.swing.event.ChangeListener;
  * Colour Chooser shows a colour based on the sliders controlling the RGB values.
  *
  * @author jonnybland
- * @version 1.0.0
+ * @version 1.0.2
  *
  */
 public class Colour implements ChangeListener {
@@ -23,7 +23,7 @@ public class Colour implements ChangeListener {
 	private JPanel colourPanel, sliderPanel; 
 	
 	// Creating the labels for the sliders 
-	private JTextField redText, blueText, greenText; 
+	private JTextField redText, blueText, greenText, rgbText; 
 	
 	/**
 	 * Move the sliders to change the RGB values of the colour. 
@@ -32,8 +32,13 @@ public class Colour implements ChangeListener {
 		
 		JFrame frame = new JFrame("Colour Chooser"); 
 		JPanel objectsPanel = new JPanel(new GridLayout(2,0));
-		colourPanel = new JPanel(); 
+		colourPanel = new JPanel(new GridLayout(2,0)); 
 		sliderPanel = new JPanel(new GridLayout(6,0));
+		
+		// Set the initial start to rgb(0,0,0); 
+		r = 0;
+		g = 0; 
+		b = 0; 
 		
 		// Creating sliders
 		red = new JSlider(JSlider.HORIZONTAL, 0, 255, 0); 
@@ -49,6 +54,12 @@ public class Colour implements ChangeListener {
 		redText = new JTextField();
 		blueText = new JTextField();
 		greenText = new JTextField(); 
+		rgbText = new JTextField(); 
+		
+		// Set the font 
+		Font font = new Font("Helvetica", Font.PLAIN, 24);
+		rgbText.setFont(font); 
+		
 		
 		// Sets the red slider text label
 		redText.setBackground(new Color(0,0,0));
@@ -67,6 +78,15 @@ public class Colour implements ChangeListener {
 		greenText.setEditable(false); 
 		greenText.setBorder(null);
 		greenText.setHorizontalAlignment(JTextField.CENTER);
+		
+		// Sets the green rgb text label
+		rgbText.setBackground(new Color(0,0,0));
+		rgbText.setEditable(false); 
+		rgbText.setBorder(null);
+		rgbText.setHorizontalAlignment(JTextField.CENTER);
+		
+		// Add text the RGB text to the colour panel 
+		colourPanel.add(rgbText); 
 		
 		// Adding objects to the slider panel
 		sliderPanel.add(redText);
@@ -88,7 +108,7 @@ public class Colour implements ChangeListener {
 		
 		// Adding the panels to the main panel
 		objectsPanel.add(colourPanel);
-		objectsPanel.add(sliderPanel); getClass();
+		objectsPanel.add(sliderPanel);
 		
 		// Creating a container for the JFrame
 		Container con = frame.getContentPane(); 
@@ -101,6 +121,7 @@ public class Colour implements ChangeListener {
 			
 	}
 	
+	
 	/**
 	 * Contains the methods to change to colour of the panels and text field colours
 	 */
@@ -111,10 +132,12 @@ public class Colour implements ChangeListener {
 		green.setBackground(new Color(r,g,b));
 		blue.setBackground(new Color(r,g,b));
 		
+		
 		// Sets the background colour of the textfields.
 		redText.setBackground(new Color(r,g,b));
 		greenText.setBackground(new Color(r,g,b));
 		blueText.setBackground(new Color(r,g,b));
+		rgbText.setBackground(new Color(r,g,b));
 		
 		// Sets the background colour of the panels.
 		colourPanel.setBackground(new Color(r,g,b));
@@ -126,12 +149,14 @@ public class Colour implements ChangeListener {
 			redText.setForeground(new Color(255,255,255));
 			greenText.setForeground(new Color(255,255,255));
 			blueText.setForeground(new Color(255,255,255));
+			rgbText.setForeground(new Color(255,255,255));
 			
 		} else {
 			
 			redText.setForeground(new Color(0,0,0));
 			greenText.setForeground(new Color(0,0,0));
 			blueText.setForeground(new Color(0,0,0));
+			rgbText.setForeground(new Color(0,0,0));
 			
 		}
 	}
@@ -154,6 +179,8 @@ public class Colour implements ChangeListener {
 			// Sets the slider label to the string value of the slider
 			redText.setText(number); 
 			
+			rgbText.setText("(" + r + ", " + g + ", " + b + ")");
+			
 			// Call the colour change method
 			colourChange(); 
 			
@@ -170,6 +197,8 @@ public class Colour implements ChangeListener {
 			// Sets the slider label to the string value of the slider
 			greenText.setText(number); 
 			
+			rgbText.setText("(" + r + ", " + g + ", " + b + ")");
+			
 			// Call the colour change method
 			colourChange(); 
 			
@@ -185,6 +214,8 @@ public class Colour implements ChangeListener {
 			
 			// Sets the slider label to the string value of the slider
 			blueText.setText(number); 
+			
+			rgbText.setText("(" + r + ", " + g + ", " + b + ")");
 			
 			// Call the colour change method
 			colourChange(); 
